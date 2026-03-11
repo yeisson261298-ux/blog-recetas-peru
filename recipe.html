@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ recipe.nombre }} – Sabores del Perú</title>
+<meta name="description" content="{{ recipe.descripcion }}">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:#E63946; --yellow:#FFB703; --green:#2DC653;
+  --orange:#FB8500; --bg:#FFFBF0; --white:#ffffff;
+  --dark:#1a1a2e; --gray:#6b7280; --light:#f8f4e8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(--dark);}
+
+nav{
+  background:var(--white);padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 12px rgba(0,0,0,0.08);
+  position:sticky;top:0;z-index:100;
+}
+.nav-logo{
+  font-family:'Fraunces',serif;font-size:1.4rem;font-weight:900;
+  background:linear-gradient(135deg,var(--red),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-decoration:none;
+}
+.back-btn{
+  color:var(--gray);font-size:0.85rem;font-weight:600;
+  text-decoration:none;display:flex;align-items:center;gap:6px;
+}
+
+.hero-recipe {
+  background:linear-gradient(135deg,var(--red),var(--orange));
+  padding:40px 20px;
+  text-align:center;
+  position:relative;
+}
+.recipe-emoji { font-size:5rem; display:block; margin-bottom:12px; }
+.recipe-title {
+  font-family:'Fraunces',serif;
+  font-size:clamp(2rem,7vw,3.2rem);
+  font-weight:900; color:white;
+  text-shadow:0 2px 20px rgba(0,0,0,0.2);
+}
+.recipe-desc {
+  color:rgba(255,255,255,0.9);
+  font-size:1rem; margin-top:10px;
+  max-width:500px; margin-left:auto; margin-right:auto;
+}
+.recipe-meta {
+  display:flex; gap:12px; justify-content:center;
+  flex-wrap:wrap; margin-top:20px;
+}
+.meta-pill {
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(10px);
+  color:white; padding:8px 18px;
+  border-radius:50px; font-size:0.85rem; font-weight:600;
+  border:1px solid rgba(255,255,255,0.3);
+}
+
+.wave{height:40px;background:var(--bg);margin-top:-2px;clip-path:ellipse(55% 100% at 50% 100%);}
+
+.content { max-width:800px; margin:0 auto; padding:20px 16px 40px; }
+
+/* VIDEO */
+.video-section {
+  margin-bottom:32px;
+}
+.video-section h2 {
+  font-family:'Fraunces',serif;
+  font-size:1.5rem; font-weight:900;
+  margin-bottom:14px;
+  display:flex; align-items:center; gap:8px;
+}
+.video-wrap {
+  position:relative; padding-bottom:56.25%;
+  border-radius:18px; overflow:hidden;
+  box-shadow:0 10px 40px rgba(0,0,0,0.15);
+  background:#000;
+}
+.video-wrap iframe {
+  position:absolute; inset:0;
+  width:100%; height:100%; border:none;
+}
+.video-note {
+  margin-top:10px; font-size:0.8rem;
+  color:var(--gray); text-align:center;
+}
+
+/* INGREDIENTS */
+.ingredients-section {
+  background:var(--white);
+  border-radius:20px; padding:24px;
+  margin-bottom:24px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.06);
+}
+.ingredients-section h2 {
+  font-family:'Fraunces',serif;
+  font-size:1.4rem; font-weight:900;
+  margin-bottom:16px;
+  display:flex; align-items:center; gap:8px;
+}
+.ingredients-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:10px;
+}
+.ingredient-chip {
+  background:var(--light);
+  border-radius:12px; padding:10px 14px;
+  font-size:0.88rem; font-weight:500;
+  border-left:3px solid var(--orange);
+  display:flex; align-items:center; gap:8px;
+}
+
+/* STEPS */
+.steps-section {
+  margin-bottom:24px;
+}
+.steps-section h2 {
+  font-family:'Fraunces',serif;
+  font-size:1.4rem; font-weight:900;
+  margin-bottom:16px;
+  display:flex; align-items:center; gap:8px;
+}
+.step {
+  display:flex; gap:16px; margin-bottom:16px;
+  background:var(--white); border-radius:16px;
+  padding:18px; box-shadow:0 4px 16px rgba(0,0,0,0.05);
+}
+.step-num {
+  width:38px; height:38px; min-width:38px;
+  background:linear-gradient(135deg,var(--red),var(--orange));
+  color:white; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:900; font-size:1rem;
+  font-family:'Fraunces',serif;
+}
+.step-text { font-size:0.95rem; line-height:1.6; padding-top:6px; }
+
+/* TIP */
+.tip-box {
+  background:linear-gradient(135deg,#FFF8E7,#FFF0CC);
+  border:2px solid var(--yellow);
+  border-radius:18px; padding:20px;
+  margin-bottom:24px;
+  display:flex; gap:14px; align-items:flex-start;
+}
+.tip-icon { font-size:2rem; }
+.tip-title { font-weight:700; font-size:0.9rem; margin-bottom:4px; color:var(--orange); }
+.tip-text { font-size:0.9rem; line-height:1.5; }
+
+/* MORE RECIPES BTN */
+.more-btn {
+  display:block; text-align:center;
+  background:linear-gradient(135deg,var(--red),var(--orange));
+  color:white; padding:16px 30px;
+  border-radius:50px; font-size:1rem; font-weight:700;
+  text-decoration:none; margin-top:10px;
+  font-family:'Fraunces',serif;
+  box-shadow:0 8px 25px rgba(230,57,70,0.35);
+  transition:transform 0.2s;
+}
+.more-btn:hover { transform:translateY(-3px); }
+
+footer{
+  background:var(--dark);color:rgba(255,255,255,0.7);
+  text-align:center;padding:24px 20px;font-size:0.85rem;
+}
+footer strong{color:white;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">🍽️ Sabores del Perú</a>
+  <a href="/" class="back-btn">← Volver</a>
+</nav>
+
+<div class="hero-recipe">
+  <span class="recipe-emoji">{{ recipe.emoji if recipe.emoji else '🍽️' }}</span>
+  <h1 class="recipe-title">{{ recipe.nombre }}</h1>
+  <p class="recipe-desc">{{ recipe.descripcion }}</p>
+  <div class="recipe-meta">
+    <span class="meta-pill">⏱️ {{ recipe.tiempo if recipe.tiempo else '30 min' }}</span>
+    <span class="meta-pill">👥 {{ recipe.porciones if recipe.porciones else '4 porciones' }}</span>
+    <span class="meta-pill">📊 {{ recipe.dificultad if recipe.dificultad else 'Fácil' }}</span>
+    <span class="meta-pill">🗓️ {{ recipe.fecha if recipe.fecha else 'Hoy' }}</span>
+  </div>
+</div>
+<div class="wave"></div>
+
+<div class="content">
+
+  <!-- VIDEO SECTION -->
+  <div class="video-section">
+    <h2>🎥 Video Receta</h2>
+    {% set yt_query = (recipe.youtube_query if recipe.youtube_query else recipe.nombre)|replace(' ', '+') %}
+    <div class="video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed?listType=search&list={{ yt_query }}+receta+peruana&autoplay=0"
+        allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+      </iframe>
+    </div>
+    <p class="video-note">📌 Videos de YouTube sobre "{{ recipe.nombre }}" · Puede contener anuncios de YouTube</p>
+  </div>
+
+  <!-- INGREDIENTS -->
+  {% if recipe.ingredientes %}
+  <div class="ingredients-section">
+    <h2>🛒 Ingredientes</h2>
+    <div class="ingredients-grid">
+      {% for ing in recipe.ingredientes %}
+      <div class="ingredient-chip">🥄 {{ ing }}</div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- STEPS -->
+  {% if recipe.pasos %}
+  <div class="steps-section">
+    <h2>👨‍🍳 Preparación</h2>
+    {% for paso in recipe.pasos %}
+    <div class="step">
+      <div class="step-num">{{ loop.index }}</div>
+      <div class="step-text">{{ paso }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- TIP -->
+  {% if recipe.tip %}
+  <div class="tip-box">
+    <span class="tip-icon">💡</span>
+    <div>
+      <div class="tip-title">Secreto del chef</div>
+      <div class="tip-text">{{ recipe.tip }}</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <a href="/" class="more-btn">🍽️ Ver más recetas peruanas</a>
+</div>
+
+<footer>
+  <strong>🍽️ Sabores del Perú</strong> · Gastronomía peruana auténtica 🇵🇪
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍽️ Sabores del Perú – Recetas Auténticas</title>
+<meta name="description" content="Descubre las mejores recetas de la gastronomía peruana. Ceviche, lomo saltado, ají de gallina y más platos tradicionales con videos y fotos.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E63946;
+  --yellow: #FFB703;
+  --green: #2DC653;
+  --orange: #FB8500;
+  --bg: #FFFBF0;
+  --white: #ffffff;
+  --dark: #1a1a2e;
+  --gray: #6b7280;
+  --light: #f8f4e8;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); font-family:'Plus Jakarta Sans',sans-serif; color:var(--dark); }
+
+/* NAV */
+nav {
+  background:var(--white);
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 2px 12px rgba(0,0,0,0.08);
+  position:sticky; top:0; z-index:100;
+}
+.nav-logo {
+  font-family:'Fraunces',serif;
+  font-size:1.5rem;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--red),var(--orange));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.nav-flag { font-size:1.4rem; }
+
+/* HERO */
+.hero {
+  background:linear-gradient(135deg, #E63946 0%, #FB8500 50%, #FFB703 100%);
+  padding:50px 20px 60px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before {
+  content:'🌶️🍋🥑🐟🌽';
+  position:absolute;
+  font-size:5rem;
+  opacity:0.08;
+  top:-10px; left:-10px;
+  letter-spacing:20px;
+  pointer-events:none;
+}
+.hero h1 {
+  font-family:'Fraunces',serif;
+  font-size:clamp(2.2rem,8vw,4rem);
+  color:white;
+  font-weight:900;
+  line-height:1.1;
+  text-shadow:0 2px 20px rgba(0,0,0,0.2);
+}
+.hero p {
+  color:rgba(255,255,255,0.9);
+  font-size:1.05rem;
+  margin-top:12px;
+  max-width:500px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.hero-badges {
+  margin-top:20px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.badge {
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(10px);
+  color:white;
+  padding:6px 16px;
+  border-radius:50px;
+  font-size:0.8rem;
+  font-weight:600;
+  border:1px solid rgba(255,255,255,0.3);
+}
+
+/* WAVE */
+.wave {
+  height:50px;
+  background:var(--bg);
+  margin-top:-2px;
+  clip-path:ellipse(55% 100% at 50% 100%);
+}
+
+/* SECTION */
+.section {
+  max-width:1100px;
+  margin:0 auto;
+  padding:30px 16px;
+}
+.section-title {
+  font-family:'Fraunces',serif;
+  font-size:1.8rem;
+  font-weight:900;
+  margin-bottom:6px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.section-sub {
+  color:var(--gray);
+  font-size:0.9rem;
+  margin-bottom:24px;
+}
+
+/* FEATURED CARD */
+.featured-grid {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
+}
+@media(min-width:600px){
+  .featured-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media(min-width:900px){
+  .featured-grid { grid-template-columns:repeat(3,1fr); }
+}
+
+.recipe-card {
+  background:var(--white);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,0.07);
+  cursor:pointer;
+  transition:transform 0.25s, box-shadow 0.25s;
+  text-decoration:none;
+  color:inherit;
+  display:block;
+}
+.recipe-card:hover {
+  transform:translateY(-6px);
+  box-shadow:0 16px 40px rgba(0,0,0,0.13);
+}
+
+.card-img {
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  background:linear-gradient(135deg,#FFB703,#FB8500);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:5rem;
+  position:relative;
+}
+.card-img img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.card-img-fallback {
+  width:100%;
+  height:200px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:5rem;
+}
+
+.card-badge {
+  position:absolute;
+  top:12px; right:12px;
+  background:var(--red);
+  color:white;
+  font-size:0.7rem;
+  font-weight:700;
+  padding:4px 10px;
+  border-radius:20px;
+  text-transform:uppercase;
+}
+
+.card-body { padding:18px; }
+.card-title {
+  font-family:'Fraunces',serif;
+  font-size:1.2rem;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.card-desc {
+  color:var(--gray);
+  font-size:0.85rem;
+  line-height:1.5;
+  margin-bottom:14px;
+}
+.card-meta {
+  display:flex;
+  gap:12px;
+  font-size:0.78rem;
+  color:var(--gray);
+}
+.card-meta span {
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+.card-btn {
+  display:inline-block;
+  margin-top:14px;
+  background:linear-gradient(135deg,var(--red),var(--orange));
+  color:white;
+  padding:8px 18px;
+  border-radius:50px;
+  font-size:0.82rem;
+  font-weight:600;
+  text-decoration:none;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align:center;
+  padding:60px 20px;
+  color:var(--gray);
+}
+.empty-state .emoji { font-size:4rem; margin-bottom:16px; }
+.empty-state h3 { font-size:1.3rem; margin-bottom:8px; color:var(--dark); }
+
+/* FOOTER */
+footer {
+  background:var(--dark);
+  color:rgba(255,255,255,0.7);
+  text-align:center;
+  padding:30px 20px;
+  margin-top:40px;
+  font-size:0.85rem;
+}
+footer strong { color:white; }
+
+/* LOADING */
+.loading {
+  display:flex;
+  gap:6px;
+  justify-content:center;
+  padding:40px;
+}
+.dot {
+  width:12px; height:12px;
+  background:var(--orange);
+  border-radius:50%;
+  animation:bounce 0.8s ease-in-out infinite;
+}
+.dot:nth-child(2){animation-delay:0.15s;}
+.dot:nth-child(3){animation-delay:0.3s;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+
+/* COLORS PER CATEGORY */
+.cat-entrada { background:linear-gradient(135deg,#48CAE4,#0096C7); }
+.cat-principal { background:linear-gradient(135deg,#E63946,#FB8500); }
+.cat-postre { background:linear-gradient(135deg,#FFB703,#FB8500); }
+.cat-bebida { background:linear-gradient(135deg,#2DC653,#1B9C3E); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">🍽️ Sabores del Perú</span>
+  <span class="nav-flag">🇵🇪</span>
+</nav>
+
+<div class="hero">
+  <h1>La cocina peruana<br>más rica del mundo</h1>
+  <p>Recetas auténticas con videos paso a paso. ¡Cocina como un chef peruano!</p>
+  <div class="hero-badges">
+    <span class="badge">🎥 Con videos</span>
+    <span class="badge">⏱️ Fácil de hacer</span>
+    <span class="badge">🌶️ 100% Auténtico</span>
+    <span class="badge">🔄 Nuevas recetas cada semana</span>
+  </div>
+</div>
+<div class="wave"></div>
+
+<div class="section">
+  <h2 class="section-title">🔥 Recetas Populares</h2>
+  <p class="section-sub">Descubre los sabores más queridos del Perú</p>
+
+  {% if recipes %}
+  <div class="featured-grid">
+    {% for recipe in recipes %}
+    <a href="/receta/{{ recipe.id }}" class="recipe-card">
+      <div class="card-img-fallback cat-{{ recipe.categoria|lower|replace(' ','') if recipe.categoria else 'principal' }}">
+        {{ recipe.emoji if recipe.emoji else '🍽️' }}
+        <span class="card-badge">{{ recipe.categoria if recipe.categoria else 'Plato' }}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">{{ recipe.nombre }}</div>
+        <div class="card-desc">{{ recipe.descripcion }}</div>
+        <div class="card-meta">
+          <span>⏱️ {{ recipe.tiempo if recipe.tiempo else '30 min' }}</span>
+          <span>👥 {{ recipe.porciones if recipe.porciones else '4' }}</span>
+          <span>📊 {{ recipe.dificultad if recipe.dificultad else 'Fácil' }}</span>
+        </div>
+        <span class="card-btn">Ver receta + video 🎥</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="emoji">👨‍🍳</div>
+    <h3>Preparando las recetas...</h3>
+    <p>El chef está cocinando el contenido. ¡Vuelve en unos minutos!</p>
+    <div class="loading" style="margin-top:20px;">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<footer>
+  <strong>🍽️ Sabores del Perú</strong><br>
+  Recetas auténticas de la gastronomía peruana 🇵🇪<br>
+  <span style="font-size:0.75rem;opacity:0.5;margin-top:6px;display:block;">
+    Nuevas recetas cada semana generadas con IA
+  </span>
+</footer>
+
+</body>
+</html>
